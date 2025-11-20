@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px 30px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .disclaimer {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-weight: normal;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+            color: #667eea;
+            font-size: 14px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Contáctanos!</h1>
+        <p class="subtitle">Completa el formulario y nos pondremos en contacto contigo</p>
+
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="nombre">Nombre completo *</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" required>
+                <div class="error-message" id="errorNombre">Por favor ingresa tu nombre</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo electrónico *</label>
+                <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
+                <div class="error-message" id="errorEmail">Por favor ingresa un correo válido</div>
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono de contacto *</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ej: 3001234567" required>
+                <div class="error-message" id="errorTelefono">Por favor ingresa tu teléfono</div>
+            </div>
+
+            <div class="form-group">
+                <label for="empresa">Nombre de la empresa *</label>
+                <input type="text" id="empresa" name="empresa" placeholder="Ej: Mi Empresa S.A.S" required>
+                <div class="error-message" id="errorEmpresa">Por favor ingresa el nombre de tu empresa</div>
+            </div>
+
+            <div class="form-group">
+                <label for="ciudad">Ciudad *</label>
+                <input type="text" id="ciudad" name="ciudad" placeholder="Ej: Bogotá, Medellín, Cali" required>
+                <div class="error-message" id="errorCiudad">Por favor ingresa tu ciudad</div>
+            </div>
+
+            <div class="disclaimer">
+                <strong>Protección de datos personales:</strong> Los datos personales aquí suministrados son entregados de manera voluntaria y serán tratados conforme a la Ley 1581 de 2012 y demás normatividad colombiana vigente sobre protección de datos personales. Al enviar este formulario, autorizas el tratamiento de tus datos para fines comerciales y de contacto.
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="acepto" name="acepto" required>
+                <label for="acepto">He leído y acepto la política de tratamiento de datos personales *</label>
+            </div>
+            <div class="error-message" id="errorAcepto" style="margin-top: -15px; margin-bottom: 15px;">Debes aceptar la política de tratamiento de datos</div>
+
+            <button type="submit" id="submitBtn">Enviar información</button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                Enviando información...
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✓ ¡Gracias por tu interés! Hemos recibido tu información y nos pondremos en contacto contigo pronto.
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // IMPORTANTE: Reemplaza esta URL con la URL de tu Google Apps Script
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxINzwnBUlw-UdA9uQySjQB1FYjgIGKdzw48OWY9AC8O8YiYLAl8ujBHnU1YkAYChrm1Q/exec';
+
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+        const loading = document.getElementById('loading');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Limpiar mensajes de error previos
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+            successMessage.style.display = 'none';
+            
+            // Validación
+            let isValid = true;
+            
+            const nombre = document.getElementById('nombre');
+            if (!nombre.value.trim()) {
+                document.getElementById('errorNombre').style.display = 'block';
+                isValid = false;
+            }
+            
+            const email = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim() || !emailRegex.test(email.value)) {
+                document.getElementById('errorEmail').style.display = 'block';
+                isValid = false;
+            }
+            
+            const telefono = document.getElementById('telefono');
+            if (!telefono.value.trim()) {
+                document.getElementById('errorTelefono').style.display = 'block';
+                isValid = false;
+            }
+            
+            const empresa = document.getElementById('empresa');
+            if (!empresa.value.trim()) {
+                document.getElementById('errorEmpresa').style.display = 'block';
+                isValid = false;
+            }
+            
+            const ciudad = document.getElementById('ciudad');
+            if (!ciudad.value.trim()) {
+                document.getElementById('errorCiudad').style.display = 'block';
+                isValid = false;
+            }
+            
+            const acepto = document.getElementById('acepto');
+            if (!acepto.checked) {
+                document.getElementById('errorAcepto').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Verificar que la URL del script esté configurada
+                if (SCRIPT_URL === 'PEGA_AQUI_TU_URL_DE_GOOGLE_SCRIPT') {
+                    alert('Error: Por favor configura la URL del Google Apps Script en el código HTML.');
+                    return;
+                }
+
+                // Deshabilitar botón y mostrar loading
+                submitBtn.disabled = true;
+                loading.style.display = 'block';
+
+                // Preparar datos
+                const formData = {
+                    nombre: nombre.value.trim(),
+                    email: email.value.trim(),
+                    telefono: telefono.value.trim(),
+                    empresa: empresa.value.trim(),
+                    ciudad: ciudad.value.trim()
+                };
+                
+                try {
+                    // Enviar datos a Google Sheets
+                    const response = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    // Con mode: 'no-cors', asumimos que funcionó si no hay error
+                    loading.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    form.reset();
+                    submitBtn.disabled = false;
+                    
+                    // Ocultar mensaje después de 5 segundos
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 5000);
+
+                } catch (error) {
+                    loading.style.display = 'none';
+                    submitBtn.disabled = false;
+                    alert('Hubo un error al enviar el formulario. Por favor intenta nuevamente.');
+                    console.error('Error:', error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
